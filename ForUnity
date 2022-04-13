@@ -1,0 +1,41 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+
+
+
+public class RandomSpawn : MonoBehaviour
+
+{
+    public List<string> randomer;
+    public GameObject[] columns;
+    private int rand;
+    private int r;
+    public Transform g;
+
+    private void Start()
+    {
+
+        for (int i = 0; i <= 15; i++)
+        {
+            //получаем рандомные значения *_*
+            r = Random.Range(0, 2);
+
+            //забиваем массив рандомными копиями дочерних элементов 
+            columns[i] = transform.GetChild(r).gameObject;
+
+            //создаем в родители копии детей 
+            var setpapa =  Instantiate(columns[i], transform.position, transform.rotation);
+            setpapa.transform.parent = gameObject.transform;
+
+            //генератор серийного номера для автомата 
+            rand = Random.Range(8888888, 99999999);
+            randomer[i] = rand.ToString();
+
+            //присваиваем серийник I в создаваемый объект I 
+            gameObject.transform.GetChild(i).GetComponentInChildren<Text>().text = randomer[i];
+        }
+
+    }
+}
